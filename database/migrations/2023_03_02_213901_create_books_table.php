@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->integer('stock');
             $table->text('description');
-            $table->foreignId('authors_id');
             $table->timestamps();
         });
     }
