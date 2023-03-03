@@ -16,10 +16,15 @@ return new class extends Migration
             $table->date('date_out');
             $table->date('date_in');
             $table->boolean('status');
+            $table->foreignId('customer_user_id')->index('UsrcLen');
+            $table->foreign('customer_user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('owner_user_id')->index('UsroLend');
+            $table->foreign('owner_user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('book_id')->index('booLend');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
