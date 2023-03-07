@@ -16,11 +16,22 @@ return new class extends Migration
             $table->string('title');
             $table->integer('stock');
             $table->text('description');
-            $table->foreignId('authors_id')->index('authBoo');
-            $table->foreign('authors_id')->references('id')->on('authors')->onUpdate('cascade')->onDelete('cascade')->after('authors_id');
-            $table->foreignId('category_id')->index('catBoo');
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade')->after('category_id');
+            $table->foreignId('author_id')
+                  ->nullable()
+                  ->index('Author_Books')
+                  ->foreign('author_id')
+                  ->references('id')
+                  ->on('authors')
+                  ->onDelete('cascade');
+            $table->foreignId('category_id')
+                  ->nullable()
+                  ->index('Category_Books')
+                  ->foreign('category_id')
+                  ->references('id')
+                  ->on('categories')
+                  ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     /**

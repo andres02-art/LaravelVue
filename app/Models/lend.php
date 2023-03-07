@@ -4,24 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// * @param Class Books App\Models\Books;
-use App\Models\Books\Books;
-// * @param Class User App\Models\User;
-use App\Models\User\User;
 
 class Lend extends Model
 {
     use HasFactory;
-    public function user_owner_lend()
+    /**
+     * @property array $hidden Description
+     * @property array $append Description
+     * @property array $fillable Description
+     * @property array $casts Description
+     *
+     */
+    protected $hidden;
+    protected $append;
+    protected $fillable;
+    protected $casts;
+
+    public function User_Custom_Lends()
     {
-        return $this->hasMany(User::class);
+        $this->hasMany(User::class, 'customer_user_id', 'id');
     }
-    public function user_custom_lend()
+
+    public function User_Owner_Lends()
     {
-        return $this->hasMany(User::class);
+        $this->hasMany(User::class, 'owner_user_id', 'id');
     }
-    public function book_lend()
+
+    public function Book_Lends()
     {
-        return $this->hasMany(Books::class);
+        $this->hasMany(Book::class, 'book_id', 'id');
     }
 }
