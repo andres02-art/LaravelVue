@@ -1,0 +1,24 @@
+{
+    "exclude": [
+        "node_modules",
+        "tmp",
+        "vendor",
+        ".git",
+        "app",
+        "config",
+        "database",
+        "public",
+        "routes",
+        "storage",
+        "test"
+    ],
+    "paths": {
+        "@/*": ["resources/js/*"]
+    },
+    "baseUrl": ".",
+    "compilerOptions": {
+        "target": "ES6",
+        "experimentalDecorators": true
+    },
+    "include": ["resources/js"]
+}

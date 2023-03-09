@@ -11,18 +11,14 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
+        vue(),
     ],
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',
+            '@': path.resolve(__dirname, 'resources/js'),
+            '~': path.resolve(__dirname, 'node_modules')
+
         },
     },
 });

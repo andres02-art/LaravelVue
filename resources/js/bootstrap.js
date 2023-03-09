@@ -1,4 +1,8 @@
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
+
+import _ from 'lodash';
+
+import swal from 'sweetalert2';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -7,6 +11,10 @@ import 'bootstrap';
  */
 
 import axios from 'axios';
+
+window.bootstrap = bootstrap;
+window._ = _;
+window.swal = swal;
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
