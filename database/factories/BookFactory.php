@@ -23,6 +23,13 @@ class BookFactory extends Factory
             'category_id' => $category->id,
         ]);
     }
+    /**
+     * Define the model's default state.
+     *
+     * * @param class $author App\Models\Author.php
+     * * @param class $category App\Models\Category.php
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
@@ -30,7 +37,6 @@ class BookFactory extends Factory
             'title' => fake()->title(),
             'stock' => fake()->randomDigit(),
             'description' => fake()->text()
-
         ];
     }
 }
