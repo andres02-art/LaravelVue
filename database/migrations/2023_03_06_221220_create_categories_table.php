@@ -13,8 +13,16 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->integer('stock');
+            $table->text('description');
+            $table->foreignId('authors_id')->index('authBoo');
+            $table->foreign('authors_id')->references('id')->on('authors')->onUpdate('cascade')->onDelete('cascade')->after('authors_id');
+            $table->foreignId('category_id')->index('catBoo');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade')->after('category_id');
             $table->text('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name');
             $table->text('biography');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('categories');
     }
 };
+

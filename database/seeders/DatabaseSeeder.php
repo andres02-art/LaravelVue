@@ -3,6 +3,15 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Author;
+use App\Models\Category;
+use App\Models\User;
+use App\Models\Book;
+use Database\Factories\AuthorFactory;
+use Database\Factories\BookFactory;
+use Database\Factories\CategoryFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +21,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            CategorySeeder::class,
+            UserSeeder::class,
+        ]);
+
+        User::factory(100)->create();
+        Author::factory(100)->create();
+        Book::factory(100)->foreingId(Author::find(fake()->randomNumber(2)), Category::find(fake()->randomElement([1, 2, 3])))->create();
+
     }
 }
