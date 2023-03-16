@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     /**
      * @property array $hidden Description
      * @property array $append Description
@@ -27,7 +28,7 @@ class Category extends Model
         '' => ''
     ];
 
-    public function Category_Books()
+    public function CategoryBooks()
     {
         $this->hasMany(Category::class, 'category_id', 'id');
     }

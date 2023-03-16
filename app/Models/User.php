@@ -31,18 +31,31 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $append =[
+        'full_name'
+    ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function User_Custom_Lends()
+    public function UserCustomLends()
     {
-        $this->belongsTo(Lend::class, 'customer_user_id', 'id');
+        $this->hasMany(Lend::class, 'customer_user_id', 'id');
     }
 
-    public function User_Owner_Lends()
+    public function UserOwnerLends()
     {
-        $this->belongsTo(Lend::class, 'owner_user_id', 'id');
+        $this->hasMany(Lend::class, 'owner_user_id', 'id');
     }
 
+    public function setPassword($password)
+    {
+        $this->attributes[ 'password' ] = bcrypt($password);
+    }
+
+    public function getFullName()
+    {
+        return "{$this->attributes['name']} {$this->attributes['last_name']}";
+    }
 }

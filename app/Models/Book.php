@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     /**
      * @property array $hidden Description
      * @property array $append Description
@@ -36,16 +37,16 @@ class Book extends Model
         '' => ''
     ];
 
-    public function Author_Books()
+    public function AuthorBooks()
     {
         $this->belongsTo(Author::class, 'author_id', 'id');
     }
 
-    public function Category_Books()
+    public function CategoryBooks()
     {
         $this->belongsTo(Category::class, 'category_id', 'id');
     }
-    public function Book_Lends()
+    public function BookLends()
     {
         $this->hasMany(Lend::class, 'book_id', 'id');
     }

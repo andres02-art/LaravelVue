@@ -4,7 +4,6 @@
     </div>
 </template>
 <script>
-export class {
-    el: '#VueApi'
+export default {
 }
 </script>

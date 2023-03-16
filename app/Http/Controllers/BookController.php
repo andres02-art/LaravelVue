@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -34,9 +35,17 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+
+    public function show(User $User)
     {
-        //
+        $book = $User->load('UserOwnerLends', 'UserCustomLends');
+        dd($book);
+        return view('layouts.books.indexBook', compact('book'));
+    }
+
+    public function showAllBooks()
+    {
+
     }
 
     /**

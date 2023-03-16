@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use PHPUnit\Framework\MockObject\Stub\ReturnReference;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -57,14 +58,16 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $User)
     {
-        //
+        return view('layouts.users.indexUser', compact('User'));
+    }
+    public function showAllUsers()
+    {
+        $Users = $this->index();
+        return view('layouts.users.indexUser', compact('Users'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //

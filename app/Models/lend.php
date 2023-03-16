@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lend extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     /**
      * @property array $hidden Description
      * @property array $append Description
@@ -17,21 +18,27 @@ class Lend extends Model
      */
     protected $hidden;
     protected $append;
-    protected $fillable;
+    protected $fillable=[
+        'book_id',
+        'owner_user_id',
+        'status',
+        'date_in',
+        'date_out'
+    ];
     protected $casts;
 
-    public function User_Custom_Lends()
+    public function UserCustomLends()
     {
-        $this->hasMany(User::class, 'customer_user_id', 'id');
+        $this->belongsTo(User::class, 'customer_user_id', 'id');
     }
 
-    public function User_Owner_Lends()
+    public function UserOwnerLends()
     {
-        $this->hasMany(User::class, 'owner_user_id', 'id');
+        $this->belongsTo(User::class, 'owner_user_id', 'id');
     }
 
-    public function Book_Lends()
+    public function BookLends()
     {
-        $this->hasMany(Book::class, 'book_id', 'id');
+        $this->belongsTo(Book::class, 'book_id', 'id');
     }
 }
