@@ -14,7 +14,9 @@
             </div>
         </div>
     </div>
+    @role('admin')
     @if (!$users)
-        <a class="btn btn-primary" href="{{ route('users.show.allUsers') }}">Usuarios</a>
+        <a class="btn btn-primary" href="{{ route('user.show.allUsers') }}">Usuarios</a>
     @endif
+@endrole()
 @endif

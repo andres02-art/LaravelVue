@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lend;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LendController extends Controller
@@ -27,15 +29,16 @@ class LendController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $User)
     {
-        //
+        $LendsByUser = Lend::with('Book.Author', 'Book.Category')->get()->has('CustomUser', $User);
+        return view('layouts.lends.indexLend', compact('LendsByUser'));
+
     }
 
     /**

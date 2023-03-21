@@ -23,31 +23,29 @@ class Book extends Model
         ''
     ];
     protected $fillable = [
-        'author_id',
-        'category_id',
         'title',
         'stock',
         'description',
+        'author_id',
+        'category_id',
         'created_at',
         'updated_at',
-
-
     ];
     protected $casts = [
         '' => ''
     ];
 
-    public function AuthorBooks()
+    public function Author()
     {
-        $this->belongsTo(Author::class, 'author_id', 'id');
+        return $this->belongsTo(Author::class);
     }
 
-    public function CategoryBooks()
+    public function Category()
     {
-        $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class);
     }
-    public function BookLends()
+    public function Lends()
     {
-        $this->hasMany(Lend::class, 'book_id', 'id');
+        return $this->hasMany(Lend::class);
     }
 }

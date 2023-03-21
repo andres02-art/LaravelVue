@@ -27,18 +27,18 @@ class Lend extends Model
     ];
     protected $casts;
 
-    public function UserCustomLends()
+    public function UserCustom()
     {
-        $this->belongsTo(User::class, 'customer_user_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
-    public function UserOwnerLends()
+    public function UserOwner()
     {
-        $this->belongsTo(User::class, 'owner_user_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
-    public function BookLends()
+    public function Book()
     {
-        $this->belongsTo(Book::class, 'book_id', 'id');
+        return $this->belongsTo(Book::class);
     }
 }

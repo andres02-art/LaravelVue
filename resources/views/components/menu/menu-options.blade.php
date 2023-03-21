@@ -11,8 +11,8 @@
         Tools
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('users.show', ['user'=>$hasLogin]) }}">Usuarios</a>
-        <a class="dropdown-item" href="{{ route('books.show', ['user'=>$hasLogin]) }}">Libros</a>
-        <a class="dropdown-item" href="#">Prestamos</a>
+        <a class="dropdown-item" href="{{ route('user.show', ['User'=>$hasLogin]) }}">Usuarios</a>
+        <a class="dropdown-item" href="{{ route('book.show', ['User'=>$hasLogin]) }}">Libros</a>
+        <a class="dropdown-item" href="{{ route('lend.show', ['User'=>$hasLogin]) }}">Prestamos</a>
     </div>
 </li>

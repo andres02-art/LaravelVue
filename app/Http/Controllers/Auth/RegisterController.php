@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,9 +47,16 @@ class RegisterController extends Controller
 
     protected function store(StoreUserRequest $request)
     {
-        $User = new User($request->all());
-        $User->setPassword($request->password);
-        $User->save();
+        try {
+            DB::beginTransaction();
+            $User = new User($request->all());
+            $User->setPassword($request->password);
+            $User->save();
+            $User->assignRole('user');
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+        }
 
         return redirect()->route( 'register' )->with( 'success', "User {$request->name} has been created" );
     }

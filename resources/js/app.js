@@ -6,7 +6,13 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import IndexApp from './vue/IndexApp.vue'
+import * as vue from 'vue';
+import VueSelect from 'vue-select';
+import books from './components/books.vue'
+
+
+window.Vue = vue;
+window.vSelect = VueSelect;
 
 
 /**
@@ -17,7 +23,7 @@ import IndexApp from './vue/IndexApp.vue'
 
 const app = createApp({
     components:{
-        'index-app': IndexApp
+        'books': books
     }
 });
 
@@ -38,5 +44,5 @@ const app = createApp({
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
-
+app.component('vue-select', VueSelect)
 app.mount('#app');

@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Http\Requests\StoreAuthorRequest;
-    use App\Http\Requests\UpdateAuthorRequest;
+use App\Http\Requests\UpdateAuthorRequest;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    public function showAllAuthors()
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return response()->json(['authors'=>Author::get()], 200);
     }
 
     /**

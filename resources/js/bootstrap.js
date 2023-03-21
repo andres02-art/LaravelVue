@@ -9,15 +9,30 @@ import swal from 'sweetalert2';
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+import jquery from 'jquery';
+
+
+window.$ = jquery;
 
 import axios from 'axios';
+import * as Table from 'datatables.net-bs5';
+import 'datatables.net-bs5'
 
 window.bootstrap = bootstrap;
+window.tables = Table;
+console.log(window.tables)
 window._ = _;
 window.swal = swal;
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+const csrf = window.document.head.querySelector('meta[name="csrf-token"]').attributes.content.value;
+if (!csrf) {
+    console.error('No existe ningun token');
+}else{
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf;
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

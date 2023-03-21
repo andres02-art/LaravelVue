@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -30,6 +31,13 @@ class UserFactory extends Factory
         ];
     }
 
+    public function configure()
+    {
+        return $this->afterCreating(function(User $User){
+            $User->assignRole(fake()->randomElement(['user', 'admin']));
+        });
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      */
@@ -39,4 +47,5 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
 }

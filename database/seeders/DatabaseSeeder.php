@@ -8,11 +8,8 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Book;
-use Database\Factories\AuthorFactory;
-use Database\Factories\BookFactory;
-use Database\Factories\CategoryFactory;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,11 +18,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::findOrCreate('admin', 'web');
+        Role::findOrCreate('user', 'web');
 
         $this->call([
             CategorySeeder::class,
             UserSeeder::class,
         ]);
+
+        User::find(1)->assignRole('admin');
 
         User::factory(100)->create();
         Author::factory(100)->create();

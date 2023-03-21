@@ -1,5 +1,8 @@
-<x-app.app :users=$Users??null :user=$User??null>
-<div class="container-fluid">
-    <p>libros</p>
-</div>
+<x-app.app>
+@role('user')
+<books role-data="user" ></books>
+@endrole
+@role('admin')
+<books role-data="admin"></books>
+@endrole
 </x-app.app>

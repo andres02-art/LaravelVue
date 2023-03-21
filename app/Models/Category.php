@@ -28,8 +28,8 @@ class Category extends Model
         '' => ''
     ];
 
-    public function CategoryBooks()
+    public function Books()
     {
-        $this->hasMany(Category::class, 'category_id', 'id');
+        return $this->hasMany(Book::class);
     }
 }
