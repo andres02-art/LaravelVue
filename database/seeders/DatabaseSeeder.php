@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
 
         User::find(1)->assignRole('admin');
 
-        User::factory(100)->create();
-        Author::factory(100)->create();
-        Book::factory(100)->foreingId(Author::find(fake()->randomNumber(2)), Category::find(fake()->randomElement([1, 2, 3])))->create();
+        User::factory(3)->create();
+        Author::factory(3)->create();
+        Book::factory(3)->foreingId(Author::find(fake()->randomElement([1, 2, 3])), Category::find(fake()->randomElement([1, 2, 3])))->create();
 
     }
 }

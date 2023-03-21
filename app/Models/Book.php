@@ -26,6 +26,7 @@ class Book extends Model
         'title',
         'stock',
         'description',
+        'image',
         'author_id',
         'category_id',
         'created_at',

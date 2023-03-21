@@ -56,7 +56,7 @@
                 </div>
                 <div class="mb-3" id="imageIdParent">
                     <label class="form-label fs-5 fw-bold" for="imageId">Cambiar Caratula:</label>
-                    <input  class="form-control" name="image" id="imageId" type="file" placeholder="Archivo" aria-describedby="imageIdHelp" >
+                    <input  class="form-control" name="image" id="imageId" type="file" placeholder="Archivo" aria-describedby="imageIdHelp" accept="image/*" @change="loadImage">
                     <div id="imageIdHelp" class="form-help">Ingrese su Archivo</div>
                 </div>
                 <div class="mb-3" id="descriptionIdParent">
@@ -144,6 +144,9 @@ export default {
             }, 200)
         },
 
+        loadImage(ev){
+            this.$parent.file = ev.target.files[0]
+        }
 
     },
 

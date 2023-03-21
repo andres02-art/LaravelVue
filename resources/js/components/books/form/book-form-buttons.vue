@@ -33,16 +33,16 @@ export default {
          */
         createButton(id, type, message){
             let newButton = window.document.createElement('button'), attr = {
-                id:id,
-                class:`btn btn-${type}`,
-                type:'submit',
-                'data-bs-dismiss':'modal',
+id:id,
+   class:`btn btn-${type}`,
+   type:'submit',
+   'data-bs-dismiss':'modal',
             }
             for(const [k, v] of Object.entries(attr)){
                 newButton.setAttribute(k, v)
             }
             newButton.innerHTML=message
-            this.buttons.push(newButton)
+                this.buttons.push(newButton)
         },
 
         getButtons(){

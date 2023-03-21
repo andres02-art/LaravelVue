@@ -36,29 +36,35 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        try {
-            DB::beginTransaction();
-            $Book = new Book($request->all());
-            $Book->save();
-            DB::commit();
-            return back()->with(session('success', 'Libro creado'));
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return back()->with(session('error', "{$th}, a ocurrido"));
-        }
+        $Book = new Book($request->all());
+        $this->loadImage($request, $Book);
+        $Book->save();
+        if ($request->ajax()) response()->json(['Book' => $Book]);
+        return back()->with('succes', 'Libro creado');
+    }
+
+    public function update(Book $Book, UpdateBookRequest $request)
+    {
+        $requestArray = $request->all();
+        $this->loadImage($request, $Book);
+        $requestArray['image'] = $Book->image;
+        $Book->update($requestArray);
+        if ($request->ajax()) response()->json(['Book' => $Book]);
+        return back()->with('succes', 'Libro actualizado');
     }
 
     /**
       @param Class $Book Book object for upload image
       @param Class $request Request with image file
      */
-    private function loadImage($Book, $request):object
+
+    private function loadImage($request, &$Book)
     {
-        if (!isset($request->image)) return $Book;
-        $image_name = "{Str::random(30)}.{$request->image->clientExtension()}";
-        $request->image->move(storage_path('app/public/images', $image_name));
+        if (!isset($request->image)) return;
+        $random = Str::random(20);
+        $image_name = "{$random}.{$request->image->clientExtension()}";
+        $request->image->move(storage_path('app/public/images'), $image_name);
         $Book->image = $image_name;
-        return $Book;
     }
 
 
@@ -90,17 +96,6 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, Book $Book)
-    {
-        try {
-            DB::beginTransaction();
-            $Book->update($request->all());
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return $th;
-        }
-    }
 
     /**
      * Remove the specified resource from storage.

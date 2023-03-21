@@ -50,13 +50,13 @@ Route::group(['prefix'=>'Book', 'middleware'=>['auth'], 'controller' => BookCont
 {
     Route::get('/ver/{User}', 'show')->name('book.show');
     Route::get('/ver', 'showBooks')->name('book.show.allBooks');
-    Route::get('/list', 'index')->name('book.list');
+    Route::post('/list', 'index')->name('book.list');
     Route::group(['prefix'=>'Root', 'middleware'=>['auth', 'role:admin']], function ()
     {
         Route::post('/lend/{Book}', 'lendBook')->name('book.lend');
         Route::post('/store', 'store')->name('book.store');
         Route::delete('/delete/{Book}', 'destroy')->name('book.destroy');
-        Route::put('/edit/{Book}', 'update')->name('book.update');
+        Route::post('/edit/{Book}', 'update')->name('book.update');
     });
 });
 

@@ -16,14 +16,14 @@
                     </tr>
                 </thead>
                 <tbody v-if='this.role == "admin"'>
-                    <books-item-admin v-for="(e, i) in this.books" :key="i" :bookItem="e" ></books-item-admin>
-                    <div v-elsefor class="spinner-border " role="status">
+                    <books-item-admin v-for="(e, i) in this.books" :key="i" :book-item="e" ></books-item-admin>
+                    <div v-else-for class="spinner-border " role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </tbody>
                 <tbody v-else-if='this.role == "user"'>
-                    <books-item-user v-for="(e, i) in this.books" :key="i" :bookItem="e" ></books-item-user>
-                    <div v-elsefor class="spinner-border " role="status">
+                    <books-item-user v-for="(e, i) in this.books" :key="i" :book-item="e" ></books-item-user>
+                    <div v-else-for class="spinner-border " role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </tbody>
@@ -41,93 +41,93 @@ import bookItemAdminVue from "./books/book-item-admin.vue"
 import bookItemUserVue from "./books/book-item-user.vue"
 import booksFormVue from "./books/books-form.vue"
 export default {
-    props:{
-        'roleData':{
-            'type':String,
-            'required':true
-        },
-        'user':{
-            'type':Number,
-            'required':true
-        }
-    },
-    components: {
-        'books-item-admin':bookItemAdminVue,
-        'books-item-user':bookItemUserVue,
-        'books-form':booksFormVue
-    },
-    methods:{
-        init(){
-            this.book_modal.type = null
-            this.book_modal.load = false
-            this.book_modal.id = null
-            this.book_modal.container = null
-        },
-        fetchBooks(){
-            return new Promise ((resolve)=>{
-                window.axios.get('/Book/list').then(response =>{
-                    resolve(response.data.books)
-                }).catch((error)=>{
-                    console.error(error)
-                })
-            })
-        },
-        createDatatable(){
-            $('#t1').DataTable()
-        },
-        createBookModal(type, id){
-            return new Promise((resolve)=>{
-                this.book_modal.load = true
-                this.book_modal.id = id
-                this.book_modal.type = type
-                setTimeout(()=>{
-                    if(window.document.querySelector('#M1')){
-                        resolve(window.document.querySelector('#M1'))
-                    }
-                }, 500)
-            })
-        },
-        openModal(type, id){
-            this.createBookModal(type, id).then((resolve)=>{
-                this.book_modal.container = resolve
-                this.book_modal.modal = new bootstrap.Modal(this.book_modal.container, { keyboard:false })
-                this.book_modal.container.addEventListener('hidden.bs.modal', ()=>{
+props:{
+          'roleData':{
+              'type':String,
+                  'required':true
+          },
+      },
+components: {
+                'books-item-admin':bookItemAdminVue,
+                'books-item-user':bookItemUserVue,
+                'books-form':booksFormVue
+            },
+methods:{
+            init(){
+                this.book_modal.type = null
                     this.book_modal.load = false
-                })
-                this.book_modal.modal.show()
-            })
+                    this.book_modal.id = null
+                    this.book_modal.container = null
+            },
+            async fetchBooks(){
+                await window.axios.post('/Book/list')
+            },
+            fetchBooks(){
+                return new Promise ((resolve)=>{
+                        window.axios.post('/Book/list').then(response =>{
+                                resolve(response.data.books)
+                                }).catch((error)=>{
+                                    console.error(error)
+                                    })
+                        })
+            },
+            createDatatable(){
+                $('#t1').DataTable()
+            },
+            createBookModal(type, id){
+                return new Promise((resolve)=>{
+                        this.book_modal.load = true
+                        this.book_modal.id = id
+                        this.book_modal.type = type
+                        setTimeout(()=>{
+                                if(window.document.querySelector('#M1')){
+                                resolve(window.document.querySelector('#M1'))
+                                }
+                                }, 500)
+                        })
+            },
+            openModal(type, id){
+                this.createBookModal(type, id).then((resolve)=>{
+                        this.book_modal.container = resolve
+                        this.book_modal.modal = new bootstrap.Modal(this.book_modal.container, { keyboard:false })
+                        this.book_modal.container.addEventListener('hidden.bs.modal', ()=>{
+                                this.book_modal.load = false
+                                })
+                        this.book_modal.modal.show()
+                        })
+            },
+
+            destroyBookModal(){
+                this.book_modal.load = false
+                    this.book_modal.type = null
+                    this.book_modal.id = null
+                    this.book_modal.container = null
+                    this.fetchBooks().then((resolve)=>{
+                            this.books={ ...resolve }
+                            });
+            }
+        },
+        created(){
+            this.init()
+                this.fetchBooks().then((resolve)=>{
+                        this.books= { ...resolve }
+                        })
+        },
+        data(){
+            return {
+                'books': Object,
+                'books_data': Object,
+                'role': this.roleData,
+                'book_modal': {
+                    'type':String,
+                    'load':Boolean,
+                    'id':Number,
+                    'modal':null,
+                    'container':null,
+                },
+                'restore': null,
+            }
         },
 
-        destroyBookModal(){
-            this.book_modal.load = false
-            this.book_modal.type = null
-            this.book_modal.id = null
-            this.book_modal.container = null
-            this.fetchBooks().then((resolve)=>{
-                this.books={ ...resolve }
-            });
-        }
-    },
-    created(){
-        this.init()
-        this.fetchBooks().then((resolve)=>{
-            this.books= { ...resolve }
-        })
-    },
-    data(){
-        return {
-            'books': Object,
-            'books_data': Object,
-            'role': this.roleData,
-            'book_modal': {
-                'type':String,
-                'load':Boolean,
-                'id':Number,
-                'modal':null,
-                'container':null,
-            },
-            'restore': null,
-        }
-    },
 }
 </script>

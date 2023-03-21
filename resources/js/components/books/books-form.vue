@@ -11,7 +11,7 @@
                 <div class="modal-header d-flex justify-content-between">
                     <book-form-title :form-config="this.bookFormConfig"/>
                 </div>
-                <form @submit.prevent="sendForm">
+                <form @submit.prevent="sendForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <book-form-body :form-config="this.bookFormConfig" :form-role="this.bookFormRole" :book-item="this.bookItem"/>
                     </div>
@@ -31,7 +31,6 @@ import bookFormTitleVue from "./form/book-form-title.vue"
 export default {
     props:{
         bookItem:{
-            type:Object,
             required:true
         },
         bookFormConfig:{
@@ -51,17 +50,18 @@ export default {
     data(){
         return {
             'model':null,
-            'modal':null
+            'modal':null,
+            'file':null,
         }
     },
     methods:{
         sendForm(){
             switch(this.bookFormConfig.type){
                 case 'edit':
-                    window.axios.put(`/Book/Root/${this.bookFormConfig.type}/${this.bookItem.id}`, this.model)
+                    window.axios.post(`/Book/Root/${this.bookFormConfig.type}/${this.bookItem.id}`, this.createFormData())
                 break;
                 case 'store':
-                    window.axios.post(`/Book/Root/${this.bookFormConfig.type}`, this.model)
+                    window.axios.post(`/Book/Root/${this.bookFormConfig.type}`, this.createFormData())
                 break;
                 case 'lend':
                     window.axios.post(`/Book/Root/${this.bookFormConfig.type}/${this.bookItem.id}`, this.model)
@@ -71,6 +71,16 @@ export default {
                 break;
             }
             this.$parent.destroyBookModal();
+        },
+        createFormData(){
+            const formData = new FormData()
+            console.log(this.file)
+            if(this.file) formData.append('image', this.file, this.file.name);
+            for (const [k, v] of Object.entries(this.model)){
+                formData.append(k, v)
+            }
+            console.log(formData)
+            return formData
         }
     },
     mounted(){
